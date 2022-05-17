@@ -1,0 +1,25 @@
+{
+  "name": "sdc-productoverview",
+  "version": "1.0.0",
+  "description": "The goal of this project is to replace the existing legacy API with a back end system that can support the full data set for the FEC project and can scale to meet the demands of production traffic.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha server/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpp34-sdc-blade/xinxin-overview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpp34-sdc-blade/xinxin-overview/issues"
+  },
+  "homepage": "https://github.com/rpp34-sdc-blade/xinxin-overview#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
