@@ -69,3 +69,7 @@ COPY relatedProduct (id, product_id, relatedProduct_id) from '/Users/xinxinli/ha
 -- COPY 4508205
 
 COPY feature (feature, value) from '/Users/xinxinli/hackreactor/xinxin-overview/data/uniqueFeatures.csv' CSV HEADER;
+--COPY 46
+
+COPY product_feature (id, product_id, feature_id) from '/Users/xinxinli/hackreactor/xinxin-overview/data/productFeature.csv' CSV HEADER;
+-- COPY 2219279

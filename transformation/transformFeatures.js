@@ -1,5 +1,3 @@
-//use fs.createReadStream()to read features.csv
-//only get data of feature column and value column, and append them to duplicatedFeatures.csv
 const fs = require('fs');
 const path = require('path');
 const {parse, stringify} = require('csv');
@@ -19,11 +17,6 @@ fs.createReadStream('../data/features.csv')
 .on('end', () => {
   console.log('get all feature and value columns data');
 });
-
-//use awk '!visited[$0]++' your_file > deduplicated_file to get unique combinations of features and values
-//awk '!visited[$0]++' /Users/xinxinli/hackreactor/xinxin-overview/data/duplicatedFeatures.csv > /Users/xinxinli/hackreactor/xinxin-overview/data/uniqueFeatures.csv
-
-//add them to the feature table
 
 //use fs.createReadStream()to read features.csv
 //query the feature_id from feature table based on the current feature and value

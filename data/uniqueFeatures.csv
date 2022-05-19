@@ -1,47 +1,47 @@
-feature,value
-Lenses,Ultrasheen
-Fabric,Canvas
-Buttons,Brass
-UV Protection,null
-Frames,LightCompose
-Fabric,100% Cotton
-Cut,Skinny
-Fabric,99% Cotton 1% Elastic
-Cut,Loose
-Material,FullControlSkin
-Sole,Rubber
-Mid-Sole,ControlSupport Arch Bridge
-Stitching,Double Stitch
-Frame,AllLight Composition Resin
-Lens,Ultrasheen Basic
-Green Leaf Certified,null
-Buttons,White Resin
-Stitching,Cross Stitch
-Non-GMO,null
-Lifetime Guarantee,null
-Lens,100% UV Protective
-Fair Trade Certified,null
-Fabric,Cashmere
-5 Year Warranty,null
-Fabric,"95% Cotton, 5% Elastic"
-Material,FullSupport Hybrid Compound
-Lens,Ultrasheen Gold
-Satisfaction Guaranteed,null
-Frame,DuraResin
-Fabric,Wool
-Sustainably Sourced,null
-Cut,Striaght
-Fabric,Cool Fit
-Fabric,"80% Cotton, 20% Polyester"
-Cut,Straight
-Material,Control Support Bridge
-Lens,Ultrasheen Silver
-Buttons,Ivory
-Buttons,Blue Resin
-Buttons,Black Resin
-Material,Armor Weave
-Fabric,Velvet
-Material,FullControl Skin
-Material,Rubber Mesh
-Fabric,Silk
-Fabric,FullControlSkin
+id,feature,value
+1,Lenses,Ultrasheen
+2,Fabric,Canvas
+3,Buttons,Brass
+4,UV Protection,null
+5,Frames,LightCompose
+6,Fabric,100% Cotton
+7,Cut,Skinny
+8,Fabric,99% Cotton 1% Elastic
+9,Cut,Loose
+10,Material,FullControlSkin
+11,Sole,Rubber
+12,Mid-Sole,ControlSupport Arch Bridge
+13,Stitching,Double Stitch
+14,Frame,AllLight Composition Resin
+15,Lens,Ultrasheen Basic
+16,Green Leaf Certified,null
+17,Buttons,White Resin
+18,Stitching,Cross Stitch
+19,Non-GMO,null
+20,Lifetime Guarantee,null
+21,Lens,100% UV Protective
+22,Fair Trade Certified,null
+23,Fabric,Cashmere
+24,5 Year Warranty,null
+25,Fabric,"95% Cotton, 5% Elastic"
+26,Material,FullSupport Hybrid Compound
+27,Lens,Ultrasheen Gold
+28,Satisfaction Guaranteed,null
+29,Frame,DuraResin
+30,Fabric,Wool
+31,Sustainably Sourced,null
+32,Cut,Striaght
+33,Fabric,Cool Fit
+34,Fabric,"80% Cotton, 20% Polyester"
+35,Cut,Straight
+36,Material,Control Support Bridge
+37,Lens,Ultrasheen Silver
+38,Buttons,Ivory
+39,Buttons,Blue Resin
+40,Buttons,Black Resin
+41,Material,Armor Weave
+42,Fabric,Velvet
+43,Material,FullControl Skin
+44,Material,Rubber Mesh
+45,Fabric,Silk
+46,Fabric,FullControlSkin
