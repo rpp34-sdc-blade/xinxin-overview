@@ -32,7 +32,7 @@ CREATE TABLE sku (
   style_id SERIAL REFERENCES style(id)
 );
 
-CREATE TABLE relatedProduct (
+CREATE TABLE relatedproduct (
   id SERIAL NOT NULL PRIMARY KEY,
   product_id INT REFERENCES product(id),
   relatedProduct_id INT REFERENCES product(id)
@@ -65,7 +65,7 @@ COPY sku (id, style_id, size, quantity) from '/Users/xinxinli/Downloads/skus.csv
 -- COPY 11323917
 
 -- realted has 4508263 rows
-COPY relatedProduct (id, product_id, relatedProduct_id) from '/Users/xinxinli/hackreactor/xinxin-overview/data/cleanRelated.csv' CSV HEADER;
+COPY relatedproduct (id, product_id, relatedProduct_id) from '/Users/xinxinli/hackreactor/xinxin-overview/data/cleanRelated.csv' CSV HEADER;
 -- COPY 4508205
 
 COPY feature (feature, value) from '/Users/xinxinli/hackreactor/xinxin-overview/data/uniqueFeatures.csv' CSV HEADER;
