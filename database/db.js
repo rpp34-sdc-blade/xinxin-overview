@@ -40,6 +40,38 @@ var getProductFeatures = (id) => {
   .catch(err => {throw err})
 }
 
+var getProductStyles = (id) => {
+  var query = 'SELECT id as style_id, name, original_price, sale_price, "default?" FROM style WHERE product_id = $1';
+  var values = [id];
+  var values = [id];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    console.log('rows for styles', rows);
+    return rows;
+  })
+  .catch(err => {throw err})
+}
+
+var getStylePhotos = (styleId) => {
+  var query = 'SELECT thumbnail_url, url FROM photo WHERE style_id = $1';
+  var values = [styleId];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    return rows;
+  })
+  .catch(err => {throw err})
+}
+
+var getStyleSkus = (styleId) => {
+  var query = 'SELECT id, quantity, size FROM sku WHERE style_id = $1';
+  var values = [styleId];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    return rows;
+  })
+  .catch(err => {throw err})
+}
+
 var getRelatedProducts = (id) => {
   var query = 'SELECT relatedproduct_id FROM relatedproduct WHERE product_id = $1';
   var values = [id];
@@ -55,6 +87,9 @@ module.exports = {
   getProducts,
   getAProduct,
   getProductFeatures,
+  getProductStyles,
+  getStylePhotos,
+  getStyleSkus,
   getRelatedProducts
 }
 
