@@ -12,17 +12,37 @@ pool.connect()
 
 var getProducts = (page, count) => {
   var query = 'SELECT * FROM product OFFSET $1 LIMIT $2';
-  var values = [page * count, count];
-  pool.query(query, values)
-  .then(res=> {
-    console.log(res);
+  var values = [(page - 1) * count, count];
+  return pool.query(query, values)
+  .then(({rows}) => rows)
+  .catch(err => {throw err})
+}
+
+var getAProduct = (id) => {
+  console.log('id in db', id);
+  var query = 'SELECT * FROM product Where id = $1';
+  var values = [id];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    console.log('get a product from db', rows);
+    return rows;
   })
-  .catch(err => {
-    console.log(err)
+  .catch(err => {throw err})
+}
+
+var getProductFeatures = (id) => {
+  var query = 'SELECT f.feature, f.value FROM product_feature pf INNER JOIN feature f on pf.feature_id = f.id WHERE pf.product_id = $1';
+  var values = [id];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    return rows;
   })
+  .catch(err => {throw err})
 }
 
 module.exports = {
-  getProducts
+  getProducts,
+  getAProduct,
+  getProductFeatures
 }
 
