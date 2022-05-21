@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 5000;
-const {getProducts, getAProduct, getProductFeatures} = require('../database/db.js');
+const {getProducts, getAProduct, getProductFeatures, getRelatedProducts} = require('../database/db.js');
 
 app.get('/products', (req, res) => {
   var page = req.query.page || 1;
@@ -13,26 +13,36 @@ app.get('/products', (req, res) => {
 
 app.get('/products/:product_id', (req, res) => {
   var product_id = req.params.product_id;
+  var productInfo = {};
   getAProduct(product_id)
-  .then(productInfo => {
-    if(!productInfo.length) {
+  .then(data => {
+    if(!data.length) {
       res.send('This product does not exist.')
     } else {
-      return productInfo[0];
+      productInfo = data[0];
+      return getProductFeatures(product_id)
     }
   })
-  .then(productInfo => {
-    getProductFeatures(product_id)
-    .then(productFeatures => {
-      productInfo.features = productFeatures;
-      res.send(productInfo);
-    })
+  .then(productFeatures => {
+    productInfo.features = productFeatures;
+    res.send(productInfo);
   })
   .catch(err => console.log(err))
 })
 
 app.get('/products/:product_id/styles', (req, res) => {
   var product_id = req.params.product_id;
+
+})
+
+app.get('/products/:product_id/related', (req, res) => {
+  var product_id = req.params.product_id;
+  getRelatedProducts(product_id)
+  .then(data => {
+    var related = data.map(obj => obj.relatedproduct_id);
+    res.send(related);
+  })
+  .catch(err => console.log(err))
 })
 
 app.listen(port, () => {

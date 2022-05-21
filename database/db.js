@@ -40,11 +40,21 @@ var getProductFeatures = (id) => {
   .catch(err => {throw err})
 }
 
+var getRelatedProducts = (id) => {
+  var query = 'SELECT relatedproduct_id FROM relatedproduct WHERE product_id = $1';
+  var values = [id];
+  return pool.query(query, values)
+  .then(({rows}) => {
+    return rows;
+  })
+  .catch(err => {throw err})
+}
 
 
 module.exports = {
   getProducts,
   getAProduct,
-  getProductFeatures
+  getProductFeatures,
+  getRelatedProducts
 }
 
