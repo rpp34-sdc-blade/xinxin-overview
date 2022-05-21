@@ -65,11 +65,11 @@ COPY sku (id, style_id, size, quantity) from '/Users/xinxinli/Downloads/skus.csv
 -- COPY 11323917
 
 -- realted has 4508263 rows
-COPY relatedproduct (id, product_id, relatedProduct_id) from '/Users/xinxinli/hackreactor/xinxin-overview/data/cleanRelated.csv' CSV HEADER;
+COPY relatedproduct (id, product_id, relatedProduct_id) from '/Users/xinxinli/hackreactor/xinxin-overview/csv/cleanRelated.csv' CSV HEADER;
 -- COPY 4508205
 
-COPY feature (feature, value) from '/Users/xinxinli/hackreactor/xinxin-overview/data/uniqueFeatures.csv' CSV HEADER;
+COPY feature (feature, value) from '/Users/xinxinli/hackreactor/xinxin-overview/csv/uniqueFeatures.csv' CSV HEADER;
 --COPY 46
 
-COPY product_feature (id, product_id, feature_id) from '/Users/xinxinli/hackreactor/xinxin-overview/data/productFeature.csv' CSV HEADER;
+COPY product_feature (id, product_id, feature_id) from '/Users/xinxinli/hackreactor/xinxin-overview/csv/productFeature.csv' CSV HEADER;
 -- COPY 2219279

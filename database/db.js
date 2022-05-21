@@ -40,6 +40,8 @@ var getProductFeatures = (id) => {
   .catch(err => {throw err})
 }
 
+
+
 module.exports = {
   getProducts,
   getAProduct,

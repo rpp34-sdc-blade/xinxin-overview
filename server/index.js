@@ -31,6 +31,10 @@ app.get('/products/:product_id', (req, res) => {
   .catch(err => console.log(err))
 })
 
+app.get('/products/:product_id/styles', (req, res) => {
+  var product_id = req.params.product_id;
+})
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })

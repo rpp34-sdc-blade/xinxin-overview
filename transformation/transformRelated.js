@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const {parse, stringify} = require('csv');
 
-fs.createReadStream('../data/related.csv')
+fs.createReadStream('../csv/related.csv')
 .pipe(parse())
 //use parse() middleware to parse each row of csv to array
 .on('data', (data) => {
@@ -13,7 +13,7 @@ fs.createReadStream('../data/related.csv')
     //stringify object/array to csv format
     stringify(arr, {header: false}, function (err, output) {
       console.log(1);
-      fs.appendFile(path.join(__dirname, '..', 'data', 'cleanRelated.csv'), output, (err) => {
+      fs.appendFile(path.join(__dirname, '..', 'csv', 'cleanRelated.csv'), output, (err) => {
         if(err) {
           return console.log(err)
         }
