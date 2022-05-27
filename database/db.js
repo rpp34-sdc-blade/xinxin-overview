@@ -32,7 +32,6 @@ var getProductFeatures = (productId) => {
   var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
-    console.log('get join result of features', rows);
     return rows[0];
   })
   .catch(err => {throw err})
@@ -79,12 +78,10 @@ var getRelatedProducts = (id) => {
   var values = [id];
   return pool.query(query, values)
   .then(({rows}) => {
-    console.log('rows in related', rows);
     return rows[0].array_agg;
   })
   .catch(err => {throw err})
 }
-
 
 module.exports = {
   getProducts,
