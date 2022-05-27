@@ -18,66 +18,69 @@ var getProducts = (page, count) => {
   .catch(err => {throw err})
 }
 
-var getAProduct = (id) => {
-  console.log('id in db', id);
-  var query = 'SELECT * FROM product Where id = $1';
-  var values = [id];
+
+var getProductFeatures = (productId) => {
+  var query = `
+    SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, p.created_at, p.updated_at,
+    json_agg(json_build_object('feature', f.feature, 'value', f.value)) AS features
+    FROM product p
+    INNER JOIN product_feature pf on p.id = pf.product_id
+    INNER JOIN feature f on pf.feature_id = f.id
+    WHERE p.id = $1
+    GROUP BY p.id
+  `;
+  var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
-    console.log('get a product from db', rows);
-    return rows;
+    console.log('get join result of features', rows);
+    return rows[0];
   })
   .catch(err => {throw err})
 }
 
-var getProductFeatures = (id) => {
-  var query = 'SELECT f.feature, f.value FROM product_feature pf INNER JOIN feature f on pf.feature_id = f.id WHERE pf.product_id = $1';
-  var values = [id];
+var getProductStyles = (productId) => {
+    var query = `
+    SELECT id AS product_id,
+    (
+      SELECT array_to_json(array_agg(t))
+      FROM (
+        SELECT id AS style_id, name, original_price, sale_price, "default?",
+        (
+          SELECT array_to_json(array_agg(d))
+          FROM (
+            SELECT thumbnail_url, url
+            FROM photo
+            WHERE style_id = style.id
+          ) d
+        ) AS photos,
+        (
+          SELECT jsonb_object_agg(id, to_jsonb(sku) - 'style_id' - 'id') skus
+          FROM sku
+          WHERE style_id = style.id
+        )
+        FROM style
+        WHERE product_id = product.id
+      ) t
+    ) AS results
+    FROM product
+    WHERE id = $1;
+  `;
+  var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
-    return rows;
+    return rows[0];
   })
   .catch(err => {throw err})
 }
 
-var getProductStyles = (id) => {
-  var query = 'SELECT id as style_id, name, original_price, sale_price, "default?" FROM style WHERE product_id = $1';
-  var values = [id];
-  var values = [id];
-  return pool.query(query, values)
-  .then(({rows}) => {
-    console.log('rows for styles', rows);
-    return rows;
-  })
-  .catch(err => {throw err})
-}
-
-var getStylePhotos = (styleId) => {
-  var query = 'SELECT thumbnail_url, url FROM photo WHERE style_id = $1';
-  var values = [styleId];
-  return pool.query(query, values)
-  .then(({rows}) => {
-    return rows;
-  })
-  .catch(err => {throw err})
-}
-
-var getStyleSkus = (styleId) => {
-  var query = 'SELECT id, quantity, size FROM sku WHERE style_id = $1';
-  var values = [styleId];
-  return pool.query(query, values)
-  .then(({rows}) => {
-    return rows;
-  })
-  .catch(err => {throw err})
-}
 
 var getRelatedProducts = (id) => {
-  var query = 'SELECT relatedproduct_id FROM relatedproduct WHERE product_id = $1';
+  var query = 'SELECT array_agg(relatedproduct_id) FROM relatedproduct WHERE product_id = $1';
   var values = [id];
   return pool.query(query, values)
   .then(({rows}) => {
-    return rows;
+    console.log('rows in related', rows);
+    return rows[0].array_agg;
   })
   .catch(err => {throw err})
 }
@@ -85,11 +88,7 @@ var getRelatedProducts = (id) => {
 
 module.exports = {
   getProducts,
-  getAProduct,
   getProductFeatures,
   getProductStyles,
-  getStylePhotos,
-  getStyleSkus,
   getRelatedProducts
 }
-
