@@ -7,14 +7,19 @@ app.get('/products', (req, res) => {
   var count = req.query.count || 5;
   getProducts(page, count)
   .then(data => res.send(data))
-  .catch(err => console.log(err))
+  .catch(err => res.status(500).send(`Error getting information on products from page ${page} and count ${count}`))
 })
 
 app.get('/products/:product_id', (req, res) => {
   var product_id = req.params.product_id;
   getProductFeatures(product_id)
   .then(data => {
-    res.send(data);
+    data === undefined ?
+      res.status(404).send({error: 'Ooops, page not found!'}) :
+      res.send(data);
+  })
+  .catch((error) => {
+    res.status(500).send(`Error getting info on product ${product_id}`);
   })
 })
 
@@ -32,7 +37,9 @@ app.get('/products/:product_id/related', (req, res) => {
   .then(data => {
     res.send(data);
   })
-  .catch(err => console.log(err))
+  .catch((error) => {
+    res.status(500).send('Error getting related products');
+  });
 })
 
 module.exports = app;

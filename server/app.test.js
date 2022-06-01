@@ -14,6 +14,18 @@ describe('GET /products', () => {
       expect (element).toContainKeys(['id', 'name', 'slogan', 'description', 'category', 'default_price', 'created_at', 'updated_at']);
     });
   })
+
+  test('The product ids from the response should be between 1 and 5 when requesting without page and count parameters', async() => {
+    const response = await request(app).get('/products');
+    const ids = response.body.map(element => element.id);
+    expect (ids).toIncludeSameMembers([1, 2, 3, 4, 5])
+  })
+
+  test('The product ids from the response should include 10, 11 and 12 when requesting page 4 and count 3', async() => {
+    const response = await request(app).get('/products?page=4&count=3');
+    const ids = response.body.map(element => element.id);
+    expect (ids).toIncludeSameMembers([10, 11, 12])
+  })
 })
 
 describe('GET /products/:product_id', () => {
@@ -21,6 +33,12 @@ describe('GET /products/:product_id', () => {
     const response = await request(app).get('/products/1');
     expect (response.statusCode).toBe(200);
     expect (response.body).toBeObject();
+  })
+
+  test('It should respond an error message with 404 status code if the requested product id is invalid', async() => {
+    const response = await request(app).get('/products/0');
+    expect (response.statusCode).toBe(404);
+    expect (response.body.error).toBe('Ooops, page not found!');
   })
 
   test('The specific product object should include basic informaton and features property', async() => {

@@ -20,6 +20,7 @@ var getProducts = (page, count) => {
 
 
 var getProductFeatures = (productId) => {
+  console.log('getProductFeatures in db')
   var query = `
     SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, p.created_at, p.updated_at,
     json_agg(json_build_object('feature', f.feature, 'value', f.value)) AS features
@@ -32,9 +33,12 @@ var getProductFeatures = (productId) => {
   var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
+    console.log('rows', rows)
     return rows[0];
   })
-  .catch(err => {throw err})
+  .catch(err => {
+    throw new Error(err)
+  })
 }
 
 var getProductStyles = (productId) => {
