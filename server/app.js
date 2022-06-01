@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = 5000;
 const {getProducts, getProductFeatures, getProductStyles, getRelatedProducts} = require('../database/db.js');
 
 app.get('/products', (req, res) => {
@@ -36,6 +35,4 @@ app.get('/products/:product_id/related', (req, res) => {
   .catch(err => console.log(err))
 })
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
-})
+module.exports = app;

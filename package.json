@@ -4,8 +4,8 @@
   "description": "The goal of this project is to replace the existing legacy API with a back end system that can support the full data set for the FEC project and can scale to meet the demands of production traffic.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha server/test.js",
-    "start": "nodemon server"
+    "test": "jest --watch",
+    "start": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,11 @@
   },
   "devDependencies": {
     "csv": "^6.0.5",
-    "mocha": "^10.0.0"
+    "jest": "^28.1.0",
+    "jest-extended": "^2.0.0",
+    "supertest": "^6.2.3"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["jest-extended/all"]
   }
 }
