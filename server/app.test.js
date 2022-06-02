@@ -88,15 +88,6 @@ describe('GET /products/:product_id/styles', () => {
     })
   })
 
-  test('every style should have an array of photos or no photo', async() => {
-    const response = await request(app).get('/products/1/styles');
-    response.body.results.forEach(style => {
-      style.photos === null ?
-        expect(style.photos).toBeNull() :
-        expect(style.photos).toBeArray()
-    })
-  })
-
   test('every style should have an object of skus or no sku', async() => {
     const response = await request(app).get('/products/1/styles');
     response.body.results.forEach(style => {

@@ -29,6 +29,9 @@ app.get('/products/:product_id/styles', (req, res) => {
   .then(data => {
     res.send(data);
   })
+  .catch((error) => {
+    res.status(500).send(`Error getting styles on product ${product_id}`);
+  })
 })
 
 app.get('/products/:product_id/related', (req, res) => {
