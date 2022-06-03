@@ -34,9 +34,24 @@ describe('getProductFeatures', () => {
     expect (result).toContainKeys(['id', 'name', 'slogan', 'description', 'category', 'default_price', 'created_at', 'updated_at', 'features']);
   })
 
-  test('The value of the features property should be an array', async() => {
+
+  test('The value of the features property should be an array ', async() => {
     const result = await getProductFeatures(randomProduct);
     expect (result.features).toBeArray();
+  })
+
+  test('The features should include one or multiple objects which have feature and value properties if a product has features', async() => {
+    const result = await getProductFeatures(1);
+    expect (result.features).toBeArray();
+    result.features.forEach(featureObj => {
+      expect (featureObj).toContainKeys(['feature', 'value']);
+    })
+  })
+
+  test('The features should be an empty array if a product does not have any feature', async() => {
+    const result = await getProductFeatures(10);
+    expect (result.features).toBeArray();
+    expect (result.features.length).toBe(0);
   })
 })
 
@@ -58,28 +73,59 @@ describe('getProductStyles', () => {
     expect (result.results).toBeArray();
   })
 
+  test('The results should be an empty array when a product does not have any style', async() => {
+    const result = await getProductStyles(71698);
+    expect (result.results.length).toBe(0);
+  })
+
   test('every style object should include style_id, name, original_price, sale_price, default?, photos and skus property', async() => {
     const result = await getProductStyles(randomProduct);
-    result.results.forEach(style => {
-      expect (style).toContainKeys(['style_id', 'name', 'original_price', 'sale_price', 'default?', 'photos', 'skus']);
+    if (result.results.length) {
+      result.results.forEach(style => {
+        expect (style).toContainKeys(['style_id', 'name', 'original_price', 'sale_price', 'default?', 'photos', 'skus']);
+      })
+    }
+  })
+
+  test('every photo object should have thumbnail_url and url properties no matter a style has photos or not', async() => {
+    const result = await getProductStyles(randomProduct);
+    const stylesArr = result.results
+    stylesArr.forEach(style => {
+      style.photos.forEach(photo => {
+        expect(photo).toContainKeys(['thumbnail_url', 'url'])
+      })
     })
   })
 
-  test('every style should have an array of photos or no photo', async() => {
-    const result = await getProductStyles(randomProduct);
-    result.results.forEach(style => {
-      style.photos === null ?
-        expect(style.photos).toBeNull() :
-        expect(style.photos).toBeArray()
+  test('The thumbnail_url and url properties should be null in the photo object if a style does not have a photo', async() => {
+    const result = await getProductStyles(2);
+    const stylesArr = result.results
+    stylesArr.forEach(style => {
+      expect(style.photos.length).toBe(1);
+      expect(style.photos[0].thumbnail_url).toBeNull();
+      expect(style.photos[0].url).toBeNull();
     })
   })
 
-  test('every style should have an object of skus or no sku', async() => {
+  test('In the skus object, each sku id should be the key, and an object including the size and the quantity is the value', async() => {
     const result = await getProductStyles(randomProduct);
-    result.results.forEach(style => {
-      style.skus === null ?
-        expect(style.skus).toBeNull() :
-        expect(style.skus).toBeObject()
+    const stylesArr = result.results
+    stylesArr.forEach(style => {
+      expect (style.skus).toBeObject();
+      for (var key in style.skus) {
+        expect(style.skus[key]).toBeObject();
+        expect(style.skus[key]).toContainKeys(['size', 'quantity']);
+      }
+    })
+  })
+
+  test('the sku id, the size and the quantity should be null if a style does not have a sku info', async() => {
+    const result = await getProductStyles(2);
+    const stylesArr = result.results
+    stylesArr.forEach(style => {
+      expect (style.skus).toBeObject();
+      expect(style.skus.null.size).toBeNull();
+      expect(style.skus.null.quantity).toBeNull();
     })
   })
 })

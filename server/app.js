@@ -15,7 +15,7 @@ app.get('/products/:product_id', (req, res) => {
   getProductFeatures(product_id)
   .then(data => {
     data === undefined ?
-      res.status(404).send({error: 'Ooops, page not found!'}) :
+      res.status(404).send('This product does not exist.') :
       res.send(data);
   })
   .catch((error) => {
