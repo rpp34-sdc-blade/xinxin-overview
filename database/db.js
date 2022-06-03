@@ -43,11 +43,11 @@ var getProductStyles = (productId) => {
     var query = `
     SELECT id AS product_id,
     (
-      SELECT array_to_json(array_agg(t))
+      SELECT  coalesce(array_to_json(array_agg(t)), '[]'::json)
       FROM (
         SELECT id AS style_id, name, original_price, sale_price, "default?",
         (
-          SELECT array_to_json(array_agg(d))
+          SELECT coalesce(array_to_json(array_agg(d)),'[{"thumbnail_url": null, "url": null}]'::json)
           FROM (
             SELECT thumbnail_url, url
             FROM photo
@@ -55,7 +55,7 @@ var getProductStyles = (productId) => {
           ) d
         ) AS photos,
         (
-          SELECT jsonb_object_agg(id, to_jsonb(sku) - 'style_id' - 'id') skus
+          SELECT coalesce(jsonb_object_agg(id, to_jsonb(sku) - 'style_id' - 'id'), '{"null": {"quantity": null, "size": null}}'::jsonb) skus
           FROM sku
           WHERE style_id = style.id
         )
@@ -65,13 +65,17 @@ var getProductStyles = (productId) => {
     ) AS results
     FROM product
     WHERE id = $1;
+
   `;
   var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
     return rows[0];
   })
-  .catch(err => {throw err})
+  .catch(err => {
+    console.log('styles db err', err);
+    throw err
+  })
 }
 
 
