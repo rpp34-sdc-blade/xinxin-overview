@@ -21,17 +21,20 @@ var getProducts = (page, count) => {
 
 var getProductFeatures = (productId) => {
   var query = `
-    SELECT p.id, p.name, p.slogan, p.description, p.category, p.default_price, p.created_at, p.updated_at,
-    json_agg(json_build_object('feature', f.feature, 'value', f.value)) AS features
-    FROM product p
-    INNER JOIN product_feature pf on p.id = pf.product_id
-    INNER JOIN feature f on pf.feature_id = f.id
-    WHERE p.id = $1
-    GROUP BY p.id
+  SELECT p.*,
+  (
+    SELECT coalesce(json_agg(json_build_object('feature', f.feature, 'value', f.value)), '[]'::json)
+    FROM product_feature pf, feature f
+    WHERE p.id = pf.product_id and pf.feature_id = f.id
+   ) as features
+
+  FROM product p
+  WHERE id = $1;
   `;
   var values = [productId];
   return pool.query(query, values)
   .then(({rows}) => {
+    console.log('rows in product features in db', rows);
     return rows[0];
   })
   .catch(err => {
@@ -45,7 +48,7 @@ var getProductStyles = (productId) => {
     (
       SELECT  coalesce(array_to_json(array_agg(t)), '[]'::json)
       FROM (
-        SELECT id AS style_id, name, original_price, sale_price, "default?",
+        SELECT id AS style_id, name, original_price, CASE WHEN sale_price = 'null' THEN null  ELSE sale_price END, "default?",
         (
           SELECT coalesce(array_to_json(array_agg(d)),'[{"thumbnail_url": null, "url": null}]'::json)
           FROM (
