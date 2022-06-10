@@ -51,7 +51,7 @@ CREATE TABLE product_feature (
   feature_id SERIAL REFERENCES feature(id)
 );
 
-
+-- product 1000011
 COPY product (id, name, slogan, description, category, default_price) from '/Users/xinxinli/Downloads/product.csv' CSV HEADER;
 
 -- styles has 1,958,103 rows

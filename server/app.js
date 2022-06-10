@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const {getProducts, getProductFeatures, getProductStyles, getRelatedProducts} = require('../database/db.js');
+require('newrelic');
 
 app.get('/products', (req, res) => {
   var page = req.query.page || 1;

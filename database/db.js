@@ -11,8 +11,8 @@ pool.connect()
 .catch((err) => console.log(err))
 
 var getProducts = (page, count) => {
-  var query = 'SELECT * FROM product OFFSET $1 LIMIT $2';
-  var values = [(page - 1) * count, count];
+  var query = 'SELECT * FROM product WHERE id BETWEEN $1 AND $2';
+  var values = [(page - 1) * count + 1, page * count];
   return pool.query(query, values)
   .then(({rows}) => rows)
   .catch(err => {throw err})
