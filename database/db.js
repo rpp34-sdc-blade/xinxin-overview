@@ -3,7 +3,7 @@ const pool = new Pool({
   user:'postgres',
   host:'localhost',
   database:'atelier',
-  port: 5433
+  port: 5432
 })
 
 pool.connect()

@@ -19,7 +19,6 @@
   "homepage": "https://github.com/rpp34-sdc-blade/xinxin-overview#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "newrelic": "^8.14.0",
     "pg": "^8.7.3"
   },
   "devDependencies": {
