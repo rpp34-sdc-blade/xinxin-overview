@@ -45,4 +45,8 @@ app.get('/products/:product_id/related', (req, res) => {
   });
 })
 
+app.get('/loaderio-93bb43c7c97c110637af0eb9d24ed619/', (req, res) => {
+  res.send('loaderio-93bb43c7c97c110637af0eb9d24ed619');
+})
+
 module.exports = app;
