@@ -1,4 +1,4 @@
-# :shopping_cart: Products API services :shopping:
+# Products API services
 I worked with another software engineer to rebuild back-end API service from a monolithic to service-oriented microservices to support our existing e-commerce application in this project. The service I built was scaled to meet the demands of production traffic which is 2000rps with < 1s response time with 0% error rate. 
 
 ## Technologies used
