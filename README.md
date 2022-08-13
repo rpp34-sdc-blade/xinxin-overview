@@ -1,5 +1,13 @@
 # :shopping_cart: Products API services :shopping:
-Project Atelier's Products API Service is responsible for CRUD operations on Product's overview data. Due to increased demands of production traffic, it replaced the existing API with a back end system design that can support the full data set and scaled to 1500 requests per second (RPS) with a latency of < 10ms and 0% error rate.
+I worked with another software engineer to rebuild back-end API service from a monolithic to service-oriented microservices to support our existing e-commerce application in this project. The service I built was scaled to meet the demands of production traffic which is 2000rps with < 1s response time with 0% error rate. 
+
+## Technologies used
+
+Backend Development:  Node.js, Express, Postgres, NGINX
+</br>
+Deployment: Docker, AWS EC2
+</br>
+Testing: Jest, SuperTest, K6, Loader.io, New Relic
 
 ---
 ## Table of Contents
@@ -10,18 +18,14 @@ Project Atelier's Products API Service is responsible for CRUD operations on Pro
 
 ---
 ## System Design
+  ### Database Design
+  ![overview_schema_design](https://user-images.githubusercontent.com/84343573/184508947-0bb799ae-23d3-442d-b995-43e10afa8983.jpg)
   ### Architecture
   ![Architecture](https://github.com/rpp33-sdc-violet/Products/blob/main/readmePhoto/backend%20architecture.png)
-  ### Stress Test Results
-  ![Stress Test Results](https://github.com/rpp33-sdc-violet/Products/blob/main/readmePhoto/1800rps.png)
-
-  ### Tech Stack
-  |     |     |    |
-  | ------- | ------- | ------- |
-  | Node.js | Express | MongoDB |
-  | NGINX   | AWS EC2 | Docker  |
-  | Jest    | SuperTest | Artillery |
-  | Loader.io | New Relic | Bluebird |
+  ### Stress Test Results via Loader.io
+  <img width="1154" alt="load tests1" src="https://user-images.githubusercontent.com/84343573/184509104-a81c9bb4-a55f-4d9a-912d-5dd102085abc.png">
+  <img width="1131" alt="load 3" src="https://user-images.githubusercontent.com/84343573/184509116-13f0e4d5-0f9b-4050-840b-7faa15ccddda.png">
+  <img width="1153" alt="loader 2" src="https://user-images.githubusercontent.com/84343573/184509123-e7e5bdbf-e0c6-41a7-92f4-bbfae7bbe207.png"
 
 ---
 ## Usage
@@ -33,26 +37,24 @@ Project Atelier's Products API Service is responsible for CRUD operations on Pro
   Response: `Status: 200 OK`
   ```json
   [
-    {
-    "id":7,
-    "name":"Blues Suede Shoes",
-    "slogan":"2019 Stanley Cup Limited Edition",
-    "description":"Touch down in the land of the Delta Blues in the middle of the pouring rain","category":"Dress Shoes",
-    "default_price":120
+  {
+        "id": 1,
+        "name": "Camo Onesie",
+        "slogan": "Blend in to your crowd",
+        "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+        "category": "Jackets",
+        "default_price": "140"
     },
-    {
-      "id":9,
-      "name":"Summer Shoes",
-      "slogan":"A risky call in the spring or fall",
-      "description":"Low-top panelled buffed leather and mesh sneakers. Sizing embroidered in black at round toe. Tonal lace-up closure. Pull-loop and rubberized style name at padded tongue. Padded collar. Pull-loop at heel collar. Logo embroidered in black at outer side. Tonal treaded rubber sole. Tonal stitching.",
-      "category":"Kicks",
-      "default_price":59
-    },
-    {
-      ...
+  {
+        "id": 2,
+        "name": "Bright Future Sunglasses",
+        "slogan": "You've got to wear shades",
+        "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
+        "category": "Accessories",
+        "default_price": "69"
     },
     ...
-  ]
+]
   ```
   ### Get a product's details
   Return details of a single product
@@ -68,15 +70,23 @@ Project Atelier's Products API Service is responsible for CRUD operations on Pro
   Response: `Status: 200 OK`
   ```json
   {
-    "id":7,"name":"Blues Suede Shoes",
-    "slogan":"2019 Stanley Cup Limited Edition",
-    "description":"Touch down in the land of the Delta Blues in the middle of the pouring rain","category":"Dress Shoes",
-    "default_price":"120",
-    "features":[
-      {"feature":"Sole","value":"Rubber"},
-      {"feature":"Material","value":"FullControlSkin"},
-      {"feature":"Stitching","value":"Double Stitch"}
-    ]
+    "id": 11,
+    "name": "Air Minis 250",
+    "slogan": "Full court support",
+    "description": "This optimized air cushion pocket reduces impact but keeps a perfect balance underfoot.",
+    "category": "Basketball Shoes",
+    "default_price": "0",
+    "features": [
+  	{
+            "feature": "Sole",
+            "value": "Rubber"
+        },
+  	{
+            "feature": "Material",
+            "value": "FullControlSkin"
+        },
+  	// ...
+    ],
   }
   ```
   ### Get a single product's styles
@@ -93,29 +103,42 @@ Project Atelier's Products API Service is responsible for CRUD operations on Pro
   Response: `Status: 200 OK`
   ```json
   {
-    "product_id":"10",
-    "results":[
-      {
-        "style_id":52,
-        "name":"Soul",
-        "original_price":"500000000",
-        "sale_price":null,
-        "default?":false,
-        "photos":[
-          {
-            "url":"https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/0/0a/Space_Stone_VFX.png/revision/latest?cb=20190427012702",
-            "thumbnail_url":"https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/0/0a/Space_Stone_VFX.png/revision/latest?cb=20190427012702"
-          }
+    "product_id": "1",
+    "results": [
+  	{
+      "style_id": 1,
+      "name": "Forest Green & Black",
+      "original_price": "140",
+      "sale_price": "0",
+      "default?": true,
+      "photos": [
+            {
+              "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+              "url": "urlplaceholder/style_1_photo_number.jpg"
+            },
+            {
+              "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+              "url": "urlplaceholder/style_1_photo_number.jpg"
+           }
+  			  // ...
         ],
-        "skus":{}
-      },
-      {
-        "style_id":48,
-        "name":"Space",
-        ...
-      },
-      ...
-    ]
+      "skus": {
+                "37": {
+                      "quantity": 8,
+                      "size": "XS"
+                },
+                "38": {
+                      "quantity": 16,
+                      "size": "S"
+                },
+                "39": {
+                      "quantity": 17,
+                      "size": "M"
+                },
+                //...
+            }
+       },
+      // ...
   }
   ```
 
@@ -137,59 +160,10 @@ Project Atelier's Products API Service is responsible for CRUD operations on Pro
 
 ---
 ## Installation
-  ### Set up MongoDB:
-  1. run MongoDB in your local machine or EC2 with your faviorite command
-  ```
-  brew services start mongodb-community@5.0
-  ```
-  2. create database name SDC
-  ```
-  use SDC
-  ```
-  3. Set up username and password to access database
-
-  ### For Dockerized service:
-  1. Choose version in this link: `https://hub.docker.com/repository/docker/12514/sdc-violet-product`
-  2. inside EC2 shell, run:
-  ```
-  docker run -p 80:8080  --env MONGO_USER=[username] --env MONGO_PW=[password] --env EC2_IP_DB=[ip address of the deployed database] --env LOADERIO_TOKEN=[loader.io token] --env NEW_RELIC_ENABLED=[false] 12514/sdc-violet-product:version-amd64-8
-  ```
-
-  ### To access the service without using docker:
-  1. clone the repository
-  2. run `npm install` to install all dependencies
-  3. copy and paste file name
-  ```
-  .sampleEnv
-  ```
-  4. change file name from "sampleEnv" to ".env"
-  5. update all variable inside .env file
-  ```
-  MONGO_USER= [mongodb username]
-  MONGO_PW=  [mongodb password]
-  EC2_IP_DB= [IP address of the EC2 deployed database]/[or blank if using localhost]
-  LOADERIO_TOKEN= [loader.io token for load testing]
-  NEW_RELIC_ENABLED= [True/False]
-  ```
-
-  6. In the file dbConnection.js, switch between two options localhost and EC2.
-
-  - :point_right: OPTION1: Using Database deployed in EC2 + MongoDB has username & PW
-  ```
-  mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PW}@${process.env.EC2_IP_DB}:27017/SDC`)
-  ```
-
-  - :point_right: OPTION2: Using database in a local machine
-  ```
-  mongoose.connect(`mongodb://localhost:27017/SDC`)
-  ```
-
-  8. in the terminal inside, run `npm build`
-  9. test by typing `http://localhost:8080/products` in the browser to see the response.
-  10. run `npm start` to start the server
+  1. In the terminal inside, run `npm run start` to start server
+  2. Test by typing `http://localhost:5000/products` in the Postman to see the response.
 
 ---
 ## Other Services
-Please reference the Reviews & Ratings and Questions & Answers API Services that make up the Project Atelier API:
-  - <a href='https://github.com/rpp33-sdc-violet/reviews-service'>Reviews & Ratings</a> by Joann Whang
-  - <a href='https://github.com/rpp33-sdc-violet/questions-answers'>Questions & Answers</a> by Thao Nguyen
+Please reference Questions & Answers API Services that make up the Project Atelier API:
+  - <a href='https://github.com/rpp34-sdc-blade/Retail-Q-A'>Questions & Answers</a> by Alan Li
