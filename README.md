@@ -21,7 +21,9 @@ Testing: Jest, SuperTest, K6, Loader.io, New Relic
   ### Database Design
   ![overview_schema_design](https://user-images.githubusercontent.com/84343573/184508947-0bb799ae-23d3-442d-b995-43e10afa8983.jpg)
   ### Architecture
-  ![Architecture](https://github.com/rpp33-sdc-violet/Products/blob/main/readmePhoto/backend%20architecture.png)
+  ![Architecture](https://user-images.githubusercontent.com/84343573/184517126-bd7eb432-7719-462c-a325-9b558d8b4039.png)
+
+  
   ### Stress Test Results via Loader.io
   <img width="1154" alt="load tests1" src="https://user-images.githubusercontent.com/84343573/184509104-a81c9bb4-a55f-4d9a-912d-5dd102085abc.png">
   <img width="1131" alt="load 3" src="https://user-images.githubusercontent.com/84343573/184509116-13f0e4d5-0f9b-4050-840b-7faa15ccddda.png">
