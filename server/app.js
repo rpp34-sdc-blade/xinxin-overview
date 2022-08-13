@@ -45,8 +45,8 @@ app.get('/products/:product_id/related', (req, res) => {
   });
 })
 
-app.get('/loaderio-51cf4c9098d9321705f175a548d881e8/', (req, res) => {
-  res.send('loaderio-51cf4c9098d9321705f175a548d881e8');
+app.get('/loaderio-8f4b89b29a1f913cf6f9b0904bac110c/', (req, res) => {
+  res.send('loaderio-8f4b89b29a1f913cf6f9b0904bac110c');
 })
 
 module.exports = app;
